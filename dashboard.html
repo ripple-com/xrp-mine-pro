@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium XRP Cloud Mining Platform - User Dashboard</title>    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        /* Base Styles - High-Contrast Material Dark Theme */
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #121212; 
+            color: #eeeeee; 
+            line-height: 1.6;
+        }
+
+        /* Material Dark Themed Colors */
+        :root {
+            --primary-color: #03a9f4; 
+            --secondary-color: #ff9800; 
+            --accent-color: #4CAF50; /* Green - Used for Free Plan highlight */
+            --card-bg: #212121; 
+            --border-color: #333333;
+            --menu-width: 280px;
+            --referral-bg: #1a1a1a; 
+        }
+        
+        /* Global Reset & Transitions */
+        a { color: var(--primary-color); text-decoration: none; transition: color 0.3s, transform 0.2s; }
+        a:hover { color: #81d4fa; }
+        button { cursor: pointer; border: none; transition: background-color 0.3s, box-shadow 0.3s, transform 0.2s; color: white; }
+
+        /* Header & Navigation */
+        header {
+            background-color: #121212; 
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid var(--secondary-color);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            position: sticky;
+            top: 0;
+            z-index: 900;
+        }
+
+        .logo {
+            font-size: 1.8em;
+            font-weight: 800;
+            color: var(--secondary-color);
+        }
+        
+        nav a { margin-left: 35px; font-weight: 600; font-size: 1em; color: #bbbbbb; }
+        nav a:hover { color: var(--primary-color); }
+
+        .user-auth-area {
+            display: flex;
+            align-items: center;
+        }
+        .user-info { 
+            font-size: 0.9em; 
+            margin-right: 20px;
+            font-weight: 600;
+        }
+        .logout-btn {
+            background-color: #f44336; 
+            padding: 10px 25px;
+            border-radius: 8px;
+            font-weight: 600;
+            box-shadow: 0 4px 10px rgba(244, 67, 54, 0.3);
+        }
+        .logout-btn:hover {
+            background-color: #d32f2f;
+            transform: translateY(-1px);
+        }
+
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #121212 0%, #0a0a0a 100%);
+            padding: 50px 5% 30px; 
+            text-align: center;
+            min-height: auto; 
+        }
+
+        .hero h1 {
+            color: white;
+            font-size: 3em; 
+            margin-bottom: 10px;
+            font-weight: 800;
+            text-shadow: 0 4px 10px rgba(255, 152, 0, 0.3);
+        }
+
+        .hero p {
+            font-size: 1.2em; 
+            margin-bottom: 0;
+            color: #bdbdbd;
+        }
+
+        /* Content Sections */
+        .stats, .plans, .faq, .referral {
+            padding: 40px 5%; 
+            text-align: center;
+        }
+        .referral { background-color: #1a1a1a; } 
+
+        h2 {
+            color: var(--primary-color);
+            font-size: 2.5em;
+            font-weight: 700;
+            margin-bottom: 30px; 
+        }
+
+        /* Stats Boxes - Raised Material Cards */
+        .stat-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .stat-box {
+            flex-basis: 300px;
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            text-align: left;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+            transition: all 0.3s;
+        }
+        .stat-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+        }
+
+        .stat-box h3 {
+            color: #bbbbbb;
+            font-size: 1.1em;
+            font-weight: 400;
+            margin-bottom: 5px;
+        }
+
+        .stat-box .value {
+            font-size: 3em;
+            color: var(--secondary-color);
+            font-weight: 800;
+            margin-top: 5px;
+        }
+
+        /* Plan Cards */
+        .plan-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .plan-card {
+            background-color: #2c2c2c; 
+            border-radius: 15px;
+            padding: 40px 30px;
+            width: 320px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+            border: 2px solid #424242;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative; 
+        }
+        .plan-card:hover {
+            transform: scale(1.03);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
+        }
+
+        .plan-card.gold-highlight {
+            border: 3px solid var(--secondary-color); 
+            background: linear-gradient(145deg, #2c2c2c, #3a3a3a);
+            box-shadow: 0 10px 40px rgba(255, 152, 0, 0.4);
+        }
+        
+        /* Free Plan Highlight */
+        .plan-card.free-plan {
+            border: 3px solid var(--accent-color); 
+            background: linear-gradient(145deg, #1f2b1f, #2c382c); 
+            box-shadow: 0 10px 40px rgba(76, 175, 80, 0.4);
+            order: -1; 
+        }
+        
+        /* Activated Badge */
+        .activated-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 5px;
+            font-weight: 700;
+            font-size: 0.9em;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+
+        .plan-card h3 {
+            color: var(--primary-color);
+            font-size: 2em;
+            margin-bottom: 25px;
+            font-weight: 700;
+        }
+        .plan-card.free-plan h3 {
+            color: var(--accent-color);
+        }
+
+
+        .plan-card p {
+            font-size: 1.1em;
+            margin: 12px 0;
+            color: #cccccc;
+        }
+        
+        .plan-card button {
+            background-color: var(--secondary-color);
+            padding: 14px 40px;
+            border-radius: 30px;
+            font-size: 1.1em;
+            font-weight: 600;
+            margin-top: 20px;
+            box-shadow: 0 4px 10px rgba(255, 152, 0, 0.4);
+        }
+        
+        /* Free Plan Button */
+        .plan-card.free-plan button {
+             background-color: var(--accent-color);
+             box-shadow: 0 4px 10px rgba(76, 175, 80, 0.4);
+        }
+
+
+        /* FAQ Section */
+        .faq { background-color: #1a1a1a; } 
+        .qa-item {
+            background-color: var(--card-bg);
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 25px;
+            border-radius: 8px;
+            text-align: left;
+            border-left: 4px solid var(--accent-color);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+        .qa-item h4 {
+            color: var(--primary-color);
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+
+        /* Referral System Styles */
+        .referral-box {
+            background-color: var(--referral-bg);
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 40px;
+            border-radius: 15px;
+            border: 2px dashed var(--accent-color);
+            box-shadow: 0 0 20px rgba(76, 175, 80, 0.3);
+        }
+
+        .referral-box h3 {
+            color: var(--accent-color);
+            font-size: 1.8em;
+            margin-bottom: 10px;
+        }
+
+        .referral-box p {
+            color: #cccccc;
+            margin-bottom: 30px;
+        }
+
+        .link-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        #referralLink {
+            flex-grow: 1;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background-color: var(--card-bg);
+            color: var(--primary-color);
+            font-size: 1em;
+            font-family: monospace;
+        }
+
+        .copy-btn {
+            background-color: var(--accent-color);
+            padding: 15px 25px;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+        .copy-btn:hover {
+            background-color: #388e3c;
+            transform: translateY(-1px);
+        }
+
+        #copy-feedback {
+            color: var(--secondary-color);
+            font-weight: 600;
+            margin-top: 15px;
+            display: none; 
+        }
+
+
+        /* Footer */
+        footer {
+            background-color: #000000;
+            color: #9e9e9e;
+            padding: 35px 0;
+            font-size: 0.9em;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        /* --- SIDE MENU STYLES --- */
+        .side-menu {
+            height: 100%;
+            width: 0; 
+            position: fixed;
+            z-index: 1000;
+            top: 0;
+            right: 0;
+            background-color: #2c2c2c; 
+            overflow-x: hidden;
+            padding-top: 70px; 
+            transition: width 0.5s; 
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.4);
+        }
+        .side-menu h2 { font-size: 1.5em; margin: 0 25px 30px; color: var(--secondary-color); text-align: left; border-bottom: 1px solid #424242; padding-bottom: 10px; }
+        .side-menu.open { width: var(--menu-width); } 
+        .side-menu a { padding: 15px 25px; font-size: 1em; color: #bbbbbb; display: block; border-bottom: 1px solid #333333; }
+        .side-menu a:hover { background-color: #3a3a3a; color: var(--primary-color); }
+        .side-menu a i { margin-right: 15px; color: var(--secondary-color); } 
+        .side-menu .close-btn { position: absolute; top: 15px; right: 25px; font-size: 36px; color: #eeeeee; cursor: pointer; background: none; border: none; }
+        
+        /* Side Menu Logout Button */
+        .side-menu .logout-btn-side {
+            background-color: #f44336; 
+            margin: 20px 25px; 
+            display: block; 
+            text-align: center;
+            padding: 10px 0;
+            border-radius: 8px;
+        }
+
+
+        .open-btn { 
+            position: fixed; 
+            top: 20px; 
+            right: 20px; 
+            font-size: 1.1em; 
+            background-color: var(--secondary-color); 
+            color: white; 
+            border: none; 
+            padding: 10px 12px; 
+            cursor: pointer; 
+            z-index: 1001; 
+            border-radius: 5px; 
+            display: none; 
+        }
+
+        /* --- Floating/Draggable Telegram Support Button (යාවත්කාලීන කරන ලදී) --- */
+        .telegram-support-btn {
+            position: fixed; /* පිටුව අනුචලනය කරන විට පවා දර්ශනය වේ */
+            top: 85vh; /* ආරම්භක ස්ථානය: දළ වශයෙන් පහළට */
+            left: 80vw; /* ආරම්භක ස්ථානය: දළ වශයෙන් දකුණට */
+            cursor: grab; /* ඇදගෙන යා හැකි බව දැක්වීමට */
+            z-index: 999; /* වෙනත් දේ මතින් පෙන්වීමට */
+            background-color: #0088cc; /* Telegram Blue */
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%; /* වටකුරු හැඩය */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4), 0 0 0 3px rgba(0, 136, 204, 0.5); /* Shadow සහ Glow */
+            transition: background-color 0.3s, box-shadow 0.3s;
+            text-decoration: none; /* සබැඳියක් නිසා */
+        }
+
+        .telegram-support-btn:hover {
+            background-color: #00aaff;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6), 0 0 0 5px rgba(0, 170, 255, 0.7);
+        }
+        
+        /* ඇදගෙන යන විට cursor එක වෙනස් වේ */
+        .telegram-support-btn.dragging {
+            cursor: grabbing;
+        }
+
+
+        /* --- MOBILE-ONLY OPTIMIZATION --- */
+        @media (min-width: 1px) {
+            nav, .user-auth-area { 
+                display: none !important; 
+            }
+            .open-btn { 
+                position: absolute; 
+                display: block !important; 
+            }
+            header { 
+                flex-direction: column; 
+                padding: 15px; 
+                text-align: center; 
+                justify-content: flex-start;
+                align-items: flex-start;
+                padding-right: 80px; 
+            }
+            .logo {
+                margin-right: auto;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 3em; }
+            .hero p { font-size: 1.2em; }
+            .stat-box, .plan-card { width: 90%; }
+            .stat-container, .plan-container { flex-direction: column; align-items: center; gap: 20px; }
+            .stats, .plans, .faq, .referral { padding: 40px 5%; }
+            .link-container { flex-direction: column; }
+            .copy-btn { width: 100%; }
+            .user-info { display: none !important; } 
+
+            /* කුඩා තිර සඳහා Floating බොත්තම ප්‍රමාණය අඩු කිරීම */
+            .telegram-support-btn {
+                width: 50px;
+                height: 50px;
+                font-size: 1.8em;
+                top: 85vh;
+                left: 70vw; 
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <button class="open-btn" onclick="toggleNav()"><i class="fas fa-bars"></i></button>
+
+    <div id="mySideMenu" class="side-menu">
+        <button class="close-btn" onclick="toggleNav()">&times;</button> 
+        <h2>Welcome, <span id="side-user-display-name">Loading...</span></h2> 
+        <a href="#dashboard"><i class="fas fa-chart-line"></i> Mining Stats</a>
+        <a href="#plans"><i class="fas fa-shopping-cart"></i> Buy Hash Rate</a>
+        <a href="#"><i class="fas fa-wallet"></i> Withdraw XRP</a>
+        <a href="#"><i class="fas fa-history"></i> Transaction History</a>
+        <a href="#referral"><i class="fas fa-users"></i> Referral Program</a> 
+        <a href="#"><i class="fas fa-cog"></i> Settings & Security</a>
+        <button onclick="logout()" class="logout-btn-side"><i class="fas fa-sign-out-alt"></i> Log Out</button> 
+    </div>
+
+    <header>
+        <div class="logo">XRP MINE PRO</div>
+        <nav>
+            <a href="#dashboard">Dashboard</a>
+            <a href="#plans">Plans</a>
+            <a href="#referral">Referral</a> 
+            <a href="#faq">FAQ</a>
+            <a href="#contact">Contact</a>
+        </nav>
+        <div class="user-auth-area">
+            <span class="user-info">Welcome, <span id="header-user-display-name" style="color: var(--primary-color);">Loading...</span></span>
+            <button class="logout-btn" onclick="logout()">Log Out</button>
+        </div>
+    </header>
+
+    <section class="hero">
+        <h1>Welcome Back, <span id="hero-user-display-name" style="color: var(--secondary-color);">Miner</span>!</h1> 
+        <p>Your personalized mining dashboard is ready.</p>
+    </section>
+
+    <section id="dashboard" class="stats">
+        <h2>YOUR MINING METRICS</h2>
+        <div class="stat-container">
+            <div class="stat-box">
+                <h3><i class="fas fa-coins"></i> Current XRP Balance</h3>
+                <p class="value" id="current-balance">0.0000 XRP</p> 
+            </div>
+            <div class="stat-box">
+                <h3><i class="fas fa-tachometer-alt"></i> Total Hash Rate</h3>
+                <p class="value" id="total-hash-rate">0.00 MH/s</p>
+            </div>
+            <div class="stat-box">
+                <h3><i class="fas fa-dollar-sign"></i> Estimated Daily Income</h3>
+                <p class="value" id="estimated-daily-income">$0.00</p>
+            </div>
+        </div>
+    </section>
+
+   <section id="plans" class="plans">
+    <h2>SELECT YOUR CONTRACT</h2>
+    <div class="plan-container">
+        
+        <div class="plan-card free-plan" id="free-plan-card">
+            <h3><i class="fas fa-gift"></i> FREE STARTER (Trial)</h3>
+            <p>Hash Rate: **50.00 MH/s**</p> 
+            <p>Price: **$0.00 (FREE)**</p>
+            <p>Duration: **15 Days Trial**</p>
+            <p style="font-size: 0.9em; color: #ff9800; font-weight: 600;">Full Earning: **15.00 XRP**</p> 
+            <button id="free-plan-btn" onclick="activateFreePlan()">ACTIVATE FREE PLAN <i class="fas fa-rocket"></i></button>
+        </div>
+        
+        <div class="plan-card">
+            <h3>BRONZE (1 Month)</h3>
+            <p>Hash Rate: **150 MH/s**</p>
+            <p>Price: $10</p>
+            <p>Duration: 30 Days</p>
+            <p style="font-size: 0.9em; color: var(--secondary-color); font-weight: 600;">Full Earning: **35.00 XRP**</p> 
+            <button>PURCHASE <i class="fas fa-bolt"></i></button>
+        </div>
+        
+        <div class="plan-card">
+            <h3>SILVER (2 Months)</h3>
+            <p>Hash Rate: **250 MH/s**</p>
+            <p>Price: $50</p>
+            <p>Duration: 60 Days</p>
+            <p style="font-size: 0.9em; color: var(--secondary-color); font-weight: 600;">Full Earning: **120.00 XRP**</p>
+            <button>PURCHASE <i class="fas fa-bolt"></i></button>
+        </div>
+        
+        <div class="plan-card gold-highlight">
+            <h3>ELITE GOLD (3 Months)</h3>
+            <p>Hash Rate: **500 MH/s**</p> 
+            <p>Price: $100</p>
+            <p>Duration: 90 Days</p>
+            <p style="font-size: 0.9em; color: var(--secondary-color); font-weight: 600;">Full Earning: **500.00 XRP**</p>
+            <button>PURCHASE <i class="fas fa-fire"></i></button>
+        </div>
+    </div>
+</section>
+
+
+
+    <section id="faq" class="faq">
+        <h2>SECURITY AND FAQ</h2>
+        <div class="qa-item">
+            <h4><i class="fas fa-lock"></i> Is my XRP secure?</h4>
+            <p>We use material design principles for security: strong encryption, cold storage, and 2FA authentication are standard.</p>
+        </div>
+        <div class="qa-item">
+            <h4><i class="fas fa-globe"></i> Where are the mining centers located?</h4>
+            <p>Our global data centers are strategically placed for optimal efficiency and minimal latency, ensuring consistent output.</p>
+        </div>
+    </section>
+    
+    <section id="referral" class="referral">
+        <h2>REFERRAL PROGRAM</h2>
+        <div class="referral-box">
+            <h3><i class="fas fa-handshake"></i> Invite & Earn (<span id="total-referrals">0</span> Total Referrals)</h3> 
+            <p>Share your unique link and earn **10% commission** on every plan purchase made by your referrals!</p>
+            
+            <div class="link-container">
+                <input type="text" id="referralLink" value="Loading your unique referral link..." readonly> 
+                
+                <button class="copy-btn" onclick="copyReferralLink()">
+                    <i class="fas fa-copy"></i> Copy Link
+                </button>
+            </div>
+            
+            <div id="copy-feedback">Link Copied!</div>
+        </div>
+    </section>
+    
+    <a href="https://t.me/XRP_Mine_Pro_Support" target="_blank" class="telegram-support-btn" id="telegram-btn" title="Telegram Support">
+        <i class="fab fa-telegram-plane"></i>
+    </a>
+    
+    <footer id="contact">
+        <p>Contact Us: support@xrpminepro.com</p>
+        <p>&copy; 2025 XRP Mine Pro. High-Contrast Solutions.</p>
+    </footer>
+
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+
+    <script>
+        // ⚠️ ඔබේ සැබෑ Firebase Config තොරතුරු මෙහිද තිබිය යුතුයි.
+        const firebaseConfig = {
+            apiKey: "AIzaSyBsTIzaJtaGiAfv4a69o80f0QvKiq6lFj4", 
+            authDomain: "xrp-mine-pro.firebaseapp.com",
+            projectId: "xrp-mine-pro",
+            storageBucket: "xrp-mine-pro.appspot.com",
+            messagingSenderId: "1234567890",
+            appId: "1:1234567890:web:abcdef123456"
+        };
+        
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore(); 
+        
+        // ----------------------------------------------------
+        // 🟢 ගෝලීය නියතයන් සහ විචල්‍යයන්
+        // ----------------------------------------------------
+        
+        let isFreePlanActive = false;
+        let totalHashRate = 0.00; 
+        let miningInterval; 
+        
+        const FREE_PLAN_HASH_RATE = 50.00; // MH/s
+        const DEFAULT_DAILY_INCOME_PER_MH = 0.05; // 1 MH/s මගින් දිනකට $0.05 උපයන බවට උපකල්පනය කර ඇත
+        
+        const FREE_PLAN_EXPIRY_DAYS = 15;
+        // 🔴 XRP 15.00 බෝනස් එක ඉවත් කර ඇත - දැන් මෙම නියතය අවශ්‍ය නොවේ
+        
+        // ⚡️ XRP උපයන අනුපාතය: 1 MH/s මගින් තත්පරයකට උපයන XRP ප්‍රමාණය (පැරණි Logic එකෙන් ගත් නියතයට සමානයි)
+        const XRP_RATE_PER_SECOND_PER_MH = 0.00001; 
+        const MINING_UPDATE_INTERVAL = 10000; // 10 seconds (UI update සඳහා)
+        
+        // 🟢 නව Variables: Hybrid Logic සඳහා
+        let currentLocalBalance = 0.00; 
+        let isMiningOnline = false;     
+
+
+        // ----------------------------------------------------
+        // 🟢 1. Offline Mining Calculation Logic (පිටතදී mine වීම)
+        // ----------------------------------------------------
+
+        /**
+         * පරිශීලකයා වෙබ් අඩවියෙන් පිටව සිටි කාලය ගණනය කර XRP ශේෂයට එකතු කරයි.
+         */
+        async function calculateAndApplyMining(userDocRef, userData) {
+            const totalHashRate = userData.totalHashRate || 0.00;
+            const lastMiningUpdate = userData.lastMiningUpdate ? userData.lastMiningUpdate.toDate() : null;
+
+            if (totalHashRate <= 0 || !lastMiningUpdate) {
+                return; 
+            }
+            
+            const currentTime = new Date();
+            const timeElapsedMs = currentTime.getTime() - lastMiningUpdate.getTime(); 
+            const timeElapsedSeconds = timeElapsedMs / 1000; 
+            
+            // 🧮 Offline දී උපයා ගත් XRP ප්‍රමාණය ගණනය කිරීම
+            const xrpEarnedOffline = totalHashRate * timeElapsedSeconds * XRP_RATE_PER_SECOND_PER_MH;
+
+            if (xrpEarnedOffline > 0.000001) { 
+                try {
+                    await db.runTransaction(async (transaction) => {
+                        const doc = await transaction.get(userDocRef);
+                        if (!doc.exists) return;
+
+                        const currentBalance = doc.data().balance || 0;
+                        const newBalance = currentBalance + xrpEarnedOffline;
+                        
+                        transaction.update(userDocRef, {
+                            balance: newBalance,
+                            // නව යාවත්කාලීන කාලය වත්මන් සර්වර් වේලාවට සකසන්න
+                            lastMiningUpdate: firebase.firestore.FieldValue.serverTimestamp() 
+                        });
+                        
+                        userData.balance = newBalance; // දේශීයව දත්ත යාවත්කාලීන කිරීම
+
+                        // UI යාවත්කාලීන කිරීම
+                        document.getElementById('current-balance').textContent = newBalance.toFixed(4) + ' XRP';
+                        console.log(`✅ Offline Mining Applied. +${xrpEarnedOffline.toFixed(4)} XRP earned over ${timeElapsedSeconds.toFixed(0)} seconds.`);
+                    });
+
+                } catch (e) {
+                    console.error("Offline Mining Calculation Failed:", e);
+                }
+            } 
+        }
+
+        // ----------------------------------------------------
+        // 🟢 2. Real-time UI Simulation Logic (සජීවීව පෙන්වීම)
+        // ----------------------------------------------------
+
+        function startRealTimeSimulation() {
+            if (isMiningOnline || totalHashRate <= 0) {
+                return;
+            }
+            
+            const xrpPerSecond = totalHashRate * XRP_RATE_PER_SECOND_PER_MH;
+            const xrpPerUpdate = xrpPerSecond * (MINING_UPDATE_INTERVAL / 1000); 
+
+            if (miningInterval) {
+                clearInterval(miningInterval); 
+            }
+            
+            isMiningOnline = true; 
+            
+            miningInterval = setInterval(() => {
+                // 1. දේශීය ශේෂය යාවත්කාලීන කරන්න
+                currentLocalBalance += xrpPerUpdate;
+                
+                // 2. Dashboard UI යාවත්කාලීන කරන්න
+                document.getElementById('current-balance').textContent = currentLocalBalance.toFixed(4) + ' XRP';
+                
+            }, MINING_UPDATE_INTERVAL); // සෑම තත්පර 10කට වරක්ම යාවත්කාලීන කරන්න
+        }
+
+        function stopRealTimeSimulation() {
+            if (miningInterval) {
+                clearInterval(miningInterval);
+                miningInterval = null;
+            }
+            isMiningOnline = false;
+        }
+
+
+        // --- Utility function to update the Free Plan UI ---
+        function updateFreePlanUI() {
+            const card = document.getElementById('free-plan-card');
+            const button = document.getElementById('free-plan-btn');
+            
+            card.querySelector('.activated-badge')?.remove();
+
+            if (isFreePlanActive) {
+                const badge = document.createElement('span');
+                badge.className = 'activated-badge';
+                badge.textContent = 'Activated';
+                card.appendChild(badge);
+                
+                button.disabled = true;
+                button.textContent = 'PLAN ACTIVATED';
+                button.style.backgroundColor = '#555';
+                button.style.boxShadow = 'none';
+            } else {
+                button.disabled = false;
+                button.textContent = 'ACTIVATE FREE PLAN';
+                button.style.backgroundColor = 'var(--accent-color)';
+                button.style.boxShadow = '0 4px 10px rgba(76, 175, 80, 0.4)';
+            }
+        }
+        
+        // 🔴 පැරණි startMiningSimulation() ඉවත් කර ඇත.
+
+        // 🟢 Function to handle Free Plan activation
+        async function activateFreePlan() {
+            const user = auth.currentUser;
+            if (!user) {
+                alert("Please log in to activate a plan.");
+                return;
+            }
+            if (isFreePlanActive) {
+                alert("The Free Plan is already active.");
+                return;
+            }
+
+            if (!confirm(`Are you sure you want to activate the Free Starter Plan (${FREE_PLAN_HASH_RATE.toFixed(2)} MH/s) for ${FREE_PLAN_EXPIRY_DAYS} days?`)) {
+                return;
+            }
+
+            try {
+                const userDocRef = db.collection("users").doc(user.uid);
+                
+                await db.runTransaction(async (transaction) => {
+                    const doc = await transaction.get(userDocRef);
+                    if (!doc.exists) {
+                        throw "User data not found.";
+                    }
+                    
+                    const data = doc.data();
+                    
+                    if (data.isFreePlanActive) {
+                        throw "Free Plan already active.";
+                    }
+
+                    const newTotalHashRate = (data.totalHashRate || 0) + FREE_PLAN_HASH_RATE; 
+                    const newEstimatedDailyIncome = newTotalHashRate * DEFAULT_DAILY_INCOME_PER_MH; 
+                    
+                    transaction.update(userDocRef, {
+                        isFreePlanActive: true,
+                        totalHashRate: newTotalHashRate,
+                        estimatedDailyIncome: newEstimatedDailyIncome,
+                        freePlanActivationDate: firebase.firestore.FieldValue.serverTimestamp(),
+                        // 🟢 lastMiningUpdate එක සකසයි
+                        lastMiningUpdate: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+
+                    isFreePlanActive = true;
+                    totalHashRate = newTotalHashRate; 
+                    updateFreePlanUI();
+                    
+                    document.getElementById('total-hash-rate').textContent = newTotalHashRate.toFixed(2) + ' MH/s';
+                    document.getElementById('estimated-daily-income').textContent = '$' + newEstimatedDailyIncome.toFixed(2);
+                    
+                    currentLocalBalance = data.balance || 0.00; // 🟢 නව: Simulation එක පටන් ගැනීමට පෙර ශේෂය සකසයි
+                    startRealTimeSimulation(); // 🔴 Activation පසු Mining Simulation එක පටන් ගැනීම
+
+                });
+                
+                alert(`Free Plan Activated Successfully! Your ${FREE_PLAN_HASH_RATE.toFixed(2)} MH/s mining has started for ${FREE_PLAN_EXPIRY_DAYS} days.`);
+                
+            } catch (e) {
+                console.error("Free Plan Activation Failed: ", e);
+                alert("Error activating Free Plan. Please try again. Reason: " + (e.message || e));
+            }
+        }
+
+
+        // -----------------------------------------------------------
+        // 🔑 Auth State Listener
+        // -----------------------------------------------------------
+        auth.onAuthStateChanged(async (user) => {
+            if (!user) {
+                stopRealTimeSimulation(); // 🟢 නව: Logout වන විට Simulation නවත්වයි
+                window.location.href = "register.html"; 
+                return;
+            }
+
+            try {
+                await user.reload(); 
+                user = auth.currentUser;
+
+                if (!user.emailVerified) {
+                    await auth.signOut();
+                    window.location.href = "register.html";
+                    return;
+                }
+
+
+                const userDocRef = db.collection("users").doc(user.uid);
+                let userDoc = await userDocRef.get();
+                let data = userDoc.data();
+                
+                if (!userDoc.exists) {
+                    console.warn("User data not found in Firestore! Forcing logout.");
+                    await auth.signOut(); 
+                    return;
+                }
+
+                // 🔴 දින 15 ක Free Plan Expiry Logic
+                if (data.isFreePlanActive && data.freePlanActivationDate) {
+                    const activationTime = data.freePlanActivationDate.toDate().getTime();
+                    const expiryTime = activationTime + (FREE_PLAN_EXPIRY_DAYS * 24 * 60 * 60 * 1000); 
+                    const currentTime = Date.now();
+
+                    if (currentTime > expiryTime) {
+                        console.log("Free Plan Expired. Initiating deactivation and credit.");
+
+                        // 1. 🟢 Plan එක අවසන් වීමට පෙර Mine වූ සියලු XRP ශේෂයට එක් කිරීමට
+                        await calculateAndApplyMining(userDocRef, data); 
+
+                        await db.runTransaction(async (transaction) => {
+                            const currentDoc = await transaction.get(userDocRef);
+                            const currentData = currentDoc.data();
+                            
+                            if (!currentData.isFreePlanActive) return; 
+
+                            const newTotalHashRate = Math.max(0, (currentData.totalHashRate || 0) - FREE_PLAN_HASH_RATE);
+                            const newEstimatedDailyIncome = newTotalHashRate * DEFAULT_DAILY_INCOME_PER_MH; 
+                            // 🔴 නව: බෝනස් එක එකතු කිරීමේ පියවර ඉවත් කර ඇත
+                            // const newBalance = (currentData.balance || 0) + FREE_PLAN_XRP_CREDIT; 
+                            
+                            transaction.update(userDocRef, {
+                                isFreePlanActive: false, 
+                                totalHashRate: newTotalHashRate,
+                                estimatedDailyIncome: newEstimatedDailyIncome,
+                                // balance: newBalance, // 🔴 මෙය calculateAndApplyMining මගින් සිදු වී ඇත
+                                freePlanActivationDate: firebase.firestore.FieldValue.delete(),
+                                lastMiningUpdate: firebase.firestore.FieldValue.serverTimestamp() // 🟢 අවසන් යාවත්කාලීනය සකසයි
+                            });
+                            
+                            // Local variables යාවත්කාලීන කිරීම
+                            data.isFreePlanActive = false;
+                            data.totalHashRate = newTotalHashRate;
+                            data.estimatedDailyIncome = newEstimatedDailyIncome;
+                            // data.balance යාවත්කාලීන වී ඇත්තේ calculateAndApplyMining() ඇතුළතදීය
+                        });
+
+                        alert(`Your Free Plan (${FREE_PLAN_HASH_RATE.toFixed(2)} MH/s) has expired after ${FREE_PLAN_EXPIRY_DAYS} days. Your total earnings have been credited to your balance.`);
+                        window.location.reload(); // යාවත්කාලීන කළ දත්ත සමග පිටුව නැවත Load කරන්න.
+                        return;
+                    }
+                }
+                // 🔴 දින 15 ක Free Plan Expiry Logic අවසන්
+                
+                // ----------------------------------------------------
+                // 🟢 Mining Activation Logic - Hybrid Logic එක ක්‍රියාත්මක කිරීම
+                // ----------------------------------------------------
+
+                // 1. 🔴 පළමු වරට ලොග් වන විට lastMiningUpdate සකසයි. (Offline Logic සඳහා අත්‍යවශ්‍යයි)
+                if (!data.lastMiningUpdate) {
+                    await userDocRef.update({
+                        lastMiningUpdate: firebase.firestore.FieldValue.serverTimestamp() 
+                    });
+                    userDoc = await userDocRef.get(); 
+                    data = userDoc.data();
+                }
+
+                // 2. 🟢 Offline Mining ගණනය කිරීම සහ ශේෂයට එකතු කිරීම
+                await calculateAndApplyMining(userDocRef, data);
+
+                
+                // 3. 🖥️ UI යාවත්කාලීන කිරීම
+                const userName = data.username || 'Miner'; 
+                document.getElementById('header-user-display-name').textContent = userName;
+                document.getElementById('hero-user-display-name').textContent = userName;
+                document.getElementById('side-user-display-name').textContent = userName;
+
+                document.getElementById('current-balance').textContent = (data.balance || 0.00).toFixed(4) + ' XRP';
+                document.getElementById('total-hash-rate').textContent = (data.totalHashRate || 0.00).toFixed(2) + ' MH/s';
+                document.getElementById('estimated-daily-income').textContent = '$' + (data.estimatedDailyIncome || 0.00).toFixed(2);
+                document.getElementById('total-referrals').textContent = data.referrals || 0;
+                
+                isFreePlanActive = data.isFreePlanActive || false;
+                totalHashRate = data.totalHashRate || 0.00; // 🟢 Hash Rate එක සකසයි
+                updateFreePlanUI();
+                
+                // 🟢 Referral Link එක නිවැරදිව ජනනය කිරීම
+                const referralLinkInput = document.getElementById("referralLink");
+                const referralCode = data.referralCode || user.uid.substring(0, 8); 
+                const BASE_REGISTER_URL = 'https://suwahassathsarachandrasiri.github.io/suwahaswebsite.github.io/register.html'; 
+                referralLinkInput.value = `${BASE_REGISTER_URL}?ref=${referralCode}`; 
+ 
+                
+                // 4. 🚀 Real-time Simulation එක ආරම්භ කිරීම
+                if (totalHashRate > 0) {
+                    // 🟢 දේශීය ශේෂය දත්ත සමුදායේ නව ශේෂයට සකසන්න
+                    currentLocalBalance = data.balance || 0.00;
+                    
+                    // 🟢 Real-time Simulation එක පටන් ගන්න
+                    startRealTimeSimulation(); 
+                } else {
+                    stopRealTimeSimulation();
+                }
+
+
+            } catch (error) {
+                console.error("Error during authentication or data fetch:", error);
+            }
+        });
+
+        // -----------------------------------------------------------
+        // 🚪 Logout Functionality
+        // -----------------------------------------------------------
+        function logout() {
+            auth.signOut().then(() => {
+                stopRealTimeSimulation(); // 🟢 නව: Logout විට Simulation නවත්වයි
+                window.location.href = "register.html";
+            }).catch((error) => {
+                console.error("Logout Error:", error);
+            });
+        }
+
+        // -----------------------------------------------------------
+        // 🛠️ Utility Functions
+        // ----------------------------------------------------------
+        function toggleNav() {
+            const sideMenu = document.getElementById("mySideMenu");
+            sideMenu.classList.toggle('open');
+        }
+
+        // Referral System JavaScript Function (copyReferralLink) 
+        function copyReferralLink() {
+            const referralLinkInput = document.getElementById("referralLink");
+            const feedback = document.getElementById("copy-feedback");
+
+            referralLinkInput.select();
+            referralLinkInput.setSelectionRange(0, 99999); 
+
+            try {
+                navigator.clipboard.writeText(referralLinkInput.value);
+                
+                feedback.style.display = 'block';
+                setTimeout(() => {
+                    feedback.style.display = 'none';
+                }, 2000); 
+
+            } catch (err) {
+                console.error('Could not copy text: ', err);
+                alert("Could not copy link. Please manually copy: " + referralLinkInput.value);
+            }
+        }
+        
+        // --- Telegram බොත්තම එහා මෙහා ගෙන යා හැකි (Draggable) කිරීම සඳහා JavaScript ---
+        function makeDraggable(element) {
+            let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+            let isDragging = false;
+            
+            element.onmousedown = dragMouseDown;
+            element.ontouchstart = dragTouchStart; 
+            
+            // Link එක ක්ලික් වීම වැලැක්වීමට
+            element.onclick = function(e) {
+                if (isDragging) {
+                    e.preventDefault();
+                    isDragging = false; 
+                }
+            };
+            
+            function dragMouseDown(e) {
+                e = e || window.event;
+                e.preventDefault(); 
+                
+                pos3 = e.clientX;
+                pos4 = e.clientY;
+                
+                element.classList.add('dragging'); 
+                document.onmouseup = closeDragElement;
+                document.onmousemove = elementDrag;
+            }
+            
+            function dragTouchStart(e) {
+                e = e || window.event;
+                
+                pos3 = e.targetTouches[0].clientX;
+                pos4 = e.targetTouches[0].clientY;
+                
+                element.classList.add('dragging'); 
+                document.ontouchend = closeDragElement;
+                document.ontouchmove = elementDragTouch;
+            }
+
+            function elementDrag(e) {
+                e = e || window.event;
+                e.preventDefault();
+                
+                pos1 = pos3 - e.clientX;
+                pos2 = pos4 - e.clientY;
+                pos3 = e.clientX;
+                pos4 = e.clientY;
+                
+                // පළමු pixel කිහිපය එහා මෙහා වූ විට isDragging සත්‍ය බවට පත් කරයි
+                if (Math.abs(pos1) > 2 || Math.abs(pos2) > 2) {
+                    isDragging = true;
+                }
+                
+                element.style.top = (element.offsetTop - pos2) + "px";
+                element.style.left = (element.offsetLeft - pos1) + "px";
+            }
+
+            function elementDragTouch(e) {
+                e = e || window.event;
+                
+                pos1 = pos3 - e.targetTouches[0].clientX;
+                pos2 = pos4 - e.targetTouches[0].clientY;
+                pos3 = e.targetTouches[0].clientX;
+                pos4 = e.targetTouches[0].clientY;
+                
+                if (Math.abs(pos1) > 2 || Math.abs(pos2) > 2) {
+                    isDragging = true;
+                }
+                
+                element.style.top = (element.offsetTop - pos2) + "px";
+                element.style.left = (element.offsetLeft - pos1) + "px";
+            }
+
+            function closeDragElement() {
+                document.onmouseup = null;
+                document.onmousemove = null;
+                document.ontouchend = null;
+                document.ontouchmove = null;
+                element.classList.remove('dragging');
+                
+                // Drag එක අවසන් වූ පසු, isDragging true නම් link එක විවෘත වීම නවත්වයි
+                setTimeout(() => {
+                    if(isDragging) {
+                        isDragging = false; 
+                    }
+                }, 50); 
+            }
+        }
+
+        // පිටුව Load වූ පසු draggable ශ්‍රිතය ක්‍රියාත්මක කිරීම
+        window.onload = function() {
+            // ... අනෙකුත් Firebase Logic මෙහිදී ක්‍රියාත්මක වේ ...
+            
+            // Telegram බොත්තම draggable බවට පත් කිරීම
+            const telegramBtn = document.getElementById('telegram-btn');
+            if (telegramBtn) {
+                makeDraggable(telegramBtn);
+            }
+        };
+        // --- අවසන් Draggable JavaScript කේතය ---
+
+    </script>
+
+</body>
+</html>

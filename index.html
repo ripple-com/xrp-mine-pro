@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XRP Mine Pro | Premium Cloud Mining Platform</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        /* 🎨 BASE CSS STYLES */
+        :root {
+            --primary-color: #03a9f4; /* Blue - Main Highlight */
+            --secondary-color: #ff9800; /* Orange/Gold - Register/CTA */
+            --accent-color: #4CAF50; /* Green - Mining Highlight/Success */
+            --card-bg: #212121; 
+            --bg-color: #121212;
+            --text-color: #eeeeee;
+            --border-color: #333333;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        /* ------------------ Header Styles ------------------ */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 5%;
+            background-color: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 1.8em;
+            font-weight: 800;
+            color: var(--primary-color);
+        }
+
+        .cta-btn {
+            background-color: var(--secondary-color);
+            color: var(--bg-color) !important;
+            padding: 8px 15px;
+            border-radius: 4px;
+            font-weight: 700;
+            text-decoration: none;
+        }
+        
+        /* ------------------ Hero Section Styles ------------------ */
+        .hero {
+            padding: 100px 5%; 
+            text-align: center;
+            position: relative; 
+            z-index: 1; 
+            background: radial-gradient(circle at top, #1a1a1a 0%, var(--bg-color) 70%);
+        }
+
+        .hero h1 { font-size: 3.5em; font-weight: 800; margin-bottom: 20px; }
+        .hero .highlight { color: var(--accent-color); }
+        .cta-primary {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: var(--bg-color);
+            padding: 15px 30px;
+            font-size: 1.1em;
+            font-weight: 700;
+            text-decoration: none;
+            border-radius: 6px;
+        }
+
+        .stats {
+            margin-top: 50px;
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            font-size: 1.1em;
+            color: #999999;
+        }
+
+        /* ------------------ XRP FLOATING ANIMATION ------------------ */
+        .xrp-animation-area {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden; 
+            z-index: 0;
+            opacity: 0.08;
+        }
+
+        .xrp-coins {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            padding: 0; margin: 0; list-style: none;
+        }
+
+        .xrp-coins li {
+            position: absolute; display: block; width: 20px; height: 20px;
+            animation: animate 20s linear infinite; 
+            bottom: -150px; color: var(--primary-color);
+        }
+
+        .xrp-coins li i { font-size: 3em; }
+
+        .xrp-coins li:nth-child(1) { left: 25%; width: 80px; animation-delay: 0s; animation-duration: 15s; }
+        .xrp-coins li:nth-child(2) { left: 10%; width: 20px; animation-delay: 2s; animation-duration: 12s; }
+        .xrp-coins li:nth-child(3) { left: 70%; width: 20px; animation-delay: 4s; animation-duration: 18s; }
+        .xrp-coins li:nth-child(4) { left: 40%; width: 60px; animation-delay: 0s; animation-duration: 10s; }
+        .xrp-coins li:nth-child(5) { left: 85%; width: 40px; animation-delay: 3s; animation-duration: 20s; }
+
+        @keyframes animate {
+            0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 0.5; }
+            50% { transform: translateY(-50vh) rotate(180deg) scale(1.1); }
+            100% { transform: translateY(-100vh) rotate(360deg) scale(1); opacity: 0; }
+        }
+        
+        /* ------------------ General Section Styles ------------------ */
+        .section {
+            padding: 80px 5%;
+            text-align: center;
+            background-color: var(--bg-color);
+            border-top: 1px solid var(--border-color);
+        }
+
+        .section h2 {
+            font-size: 2.2em;
+            color: var(--primary-color);
+            margin-bottom: 50px;
+            font-weight: 700;
+        }
+        
+        /* ------------------ Plans Grid Styles ------------------ */
+        .plan-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .plan-card {
+            background-color: #2c2c2c; 
+            border-radius: 15px;
+            padding: 40px 30px;
+            width: 320px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+            border: 2px solid #424242;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative; 
+            text-align: center;
+        }
+        .plan-card:hover {
+            transform: scale(1.03);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
+        }
+
+        .plan-card.gold-highlight {
+            border: 3px solid var(--secondary-color); 
+            background: linear-gradient(145deg, #2c2c2c, #3a3a3a);
+            box-shadow: 0 10px 40px rgba(255, 152, 0, 0.4);
+        }
+        
+        .plan-card.free-plan {
+            border: 3px solid var(--accent-color); 
+            background: linear-gradient(145deg, #1f2b1f, #2c382c); 
+            box-shadow: 0 10px 40px rgba(76, 175, 80, 0.4);
+        }
+        
+        .plan-card h3 {
+            color: var(--primary-color);
+            font-size: 2em;
+            margin-bottom: 25px;
+            font-weight: 700;
+        }
+        .plan-card.free-plan h3 {
+            color: var(--accent-color);
+        }
+
+
+        .plan-card p {
+            font-size: 1.1em;
+            margin: 12px 0;
+            color: #cccccc;
+        }
+        
+        .plan-card button {
+            background-color: var(--secondary-color);
+            padding: 14px 40px;
+            border-radius: 30px;
+            font-size: 1.1em;
+            font-weight: 600;
+            margin-top: 20px;
+            box-shadow: 0 4px 10px rgba(255, 152, 0, 0.4);
+        }
+        .plan-card button:hover {
+            transform: translateY(-1px);
+        }
+        
+        .plan-card.free-plan button {
+             background-color: var(--accent-color);
+             box-shadow: 0 4px 10px rgba(76, 175, 80, 0.4);
+        }
+        .plan-card button:disabled {
+            background-color: #555 !important;
+            box-shadow: none !important;
+            cursor: not-allowed;
+        }
+        
+        /* ------------------ (නව) Activated Badge CSS ------------------ */
+        /* මෙය dashboard.html වෙතින් ගෙන ආවකි. 😄.html එකට අලුතින් එක් කරන ලදී. */
+        .activated-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 5px;
+            font-weight: 700;
+            font-size: 0.9em;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+
+        /* ------------------ Features Grid Styles ------------------ */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .card { 
+            background-color: var(--card-bg);
+            padding: 30px;
+            border-radius: 8px;
+            border: 1px solid #2f2f2f;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s, border-color 0.3s;
+            text-align: center;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--secondary-color);
+        }
+
+        .card i {
+            font-size: 2.5em;
+            color: var(--accent-color);
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .card h3 {
+            font-size: 1.4em;
+            margin-top: 0;
+            color: var(--text-color);
+        }
+
+        /* ------------------ Testimonial Styles ------------------ */
+        .testimonial-section {
+             background-color: #1a1a1a;
+        }
+        .testimonial-card {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px;
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            border-left: 5px solid var(--primary-color);
+            text-align: left;
+        }
+        .quote {
+            font-style: italic;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+        .author {
+            font-weight: 700;
+            color: var(--accent-color);
+        }
+        .txn-id {
+            display: block;
+            font-size: 0.9em;
+            color: #888;
+            margin-top: 5px;
+        }
+
+
+        /* ------------------ Footer Styles ------------------ */
+        footer {
+            padding: 30px 5%;
+            background-color: var(--bg-color);
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+            color: #888888;
+            font-size: 0.9em;
+        }
+
+        footer .legal-links a {
+            color: #888888;
+            text-decoration: none;
+            margin: 0 15px;
+            transition: color 0.3s;
+        }
+        footer .legal-links a:hover { color: var(--primary-color); }
+        footer div a { margin: 0 10px; font-size: 1.4em; }
+
+        /* ------------------ Media Queries (Responsive) ------------------ */
+        @media (max-width: 1100px) {
+            .grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            }
+            .plan-container {
+                gap: 20px; /* Reduce gap on smaller screens */
+            }
+        }
+        @media (max-width: 768px) {
+            header { flex-direction: column; padding: 15px 5%; }
+            .hero h1 { font-size: 2.5em; }
+            .stats { flex-direction: column; gap: 15px; }
+            .plan-card { width: 90%; }
+            header .cta-btn { margin-top: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="xrp-animation-area">
+        <ul class="xrp-coins">
+            <li><i class="fa-brands fa-xrp"></i></li>
+            <li><i class="fa-brands fa-xrp"></i></li>
+            <li><i class="fa-brands fa-xrp"></i></li>
+            <li><i class="fa-brands fa-xrp"></i></li>
+            <li><i class="fa-brands fa-xrp"></i></li>
+        </ul>
+    </div>
+
+    <header>
+        <div class="logo">XRP Mine Pro</div>
+        <a href="register.html" class="cta-btn">Login / Register</a> 
+    </header>
+
+    <section class="hero">
+        <h1>Start Your <span class="highlight">XRP Mining</span> Journey Today.</h1>
+        <p>Premium cloud mining with high-speed performance, daily payouts, and a 10% commission referral system.</p>
+        <a href="register.html" class="cta-primary">Start Mining Now</a>
+        <div class="stats">
+            <div><i class="fas fa-users"></i> 50,000+ Users Globally</div>
+            <div><i class="fas fa-chart-line"></i> Guaranteed Uptime</div>
+            <div><i class="fas fa-shield-alt"></i> Secure & Protected</div>
+        </div>
+    </section>
+
+    <section id="plans" class="section">
+        <h2>SELECT YOUR CONTRACT</h2>
+        <div class="plan-container">
+            
+            <div class="plan-card free-plan" id="free-plan-card">
+                <h3><i class="fas fa-gift"></i> FREE STARTER (Trial)</h3>
+                <p>Hash Rate: **50.00 MH/s**</p> 
+                <p>Price: **$0.00 (FREE)**</p>
+                <p>Duration: **15 Days Trial**</p>
+                <p style="font-size: 0.9em; color: #ff9800; font-weight: 600;">Full Earning: **15.00 XRP**</p> 
+                <button id="free-plan-btn" onclick="document.location.href='register.html'">ACTIVATE FREE PLAN <i class="fas fa-rocket"></i></button>
+            </div>
+            
+            <div class="plan-card">
+                <h3>BRONZE (1 Month)</h3>
+                <p>Hash Rate: **150 MH/s**</p>
+                <p>Price: $10</p>
+                <p>Duration: 30 Days</p>
+                <p style="font-size: 0.9em; color: var(--secondary-color); font-weight: 600;">Full Earning: **35.00 XRP**</p> 
+                <button onclick="document.location.href='register.html'">PURCHASE <i class="fas fa-bolt"></i></button>
+            </div>
+            
+            <div class="plan-card">
+                <h3>SILVER (2 Months)</h3>
+                <p>Hash Rate: **250 MH/s**</p>
+                <p>Price: $50</p>
+                <p>Duration: 60 Days</p>
+                <p style="font-size: 0.9em; color: var(--secondary-color); font-weight: 600;">Full Earning: **120.00 XRP**</p>
+                <button onclick="document.location.href='register.html'">PURCHASE <i class="fas fa-bolt"></i></button>
+            </div>
+            
+            <div class="plan-card gold-highlight">
+                <h3>ELITE GOLD (3 Months)</h3>
+                <p>Hash Rate: **500 MH/s**</p> 
+                <p>Price: $100</p>
+                <p>Duration: 90 Days</p>
+                <p style="font-size: 0.9em; color: var(--secondary-color); font-weight: 600;">Full Earning: **500.00 XRP**</p>
+                <button onclick="document.location.href='register.html'">PURCHASE <i class="fas fa-fire"></i></button>
+            </div>
+        </div>
+    </section>
+    <section id="features" class="section" style="background-color: #1a1a1a;">
+        <h2>Why Choose XRP Mine Pro?</h2>
+        <div class="grid">
+            
+            <div class="card" style="text-align: left;">
+                <i class="fas fa-bolt"></i>
+                <h3>High-Speed Hashing</h3>
+                <p>We provide the latest generation of mining hardware for maximum XRP output and efficiency.</p>
+            </div>
+            
+            <div class="card" style="text-align: left;">
+                <i class="fas fa-handshake"></i>
+                <h3>10% Lifetime Commission</h3>
+                <p>Refer your friends and earn a substantial 10% commission on all their plan purchases. Passive income guaranteed!</p>
+            </div>
+            
+            <div class="card" style="text-align: left;">
+                <i class="fas fa-wallet"></i>
+                <h3>Instant Daily Payouts</h3>
+                <p>Withdraw your mined XRP directly to your wallet daily. No waiting period, quick and reliable payouts.</p>
+            </div>
+            
+            <div class="card" style="text-align: left;">
+                <i class="fas fa-headset"></i>
+                <h3>24/7 Priority Support</h3>
+                <p>Our dedicated team is always ready to assist you with any technical or account-related questions.</p>
+            </div>
+        </div>
+    </section>
+    
+    <section class="section testimonial-section">
+        <h2>What Our Users Say</h2>
+        <div class="testimonial-card">
+            <p class="quote">"I've been using XRP Mine Pro for 6 months and the payouts are instant. The passive income from the referral program is a huge bonus! Highly recommend."</p>
+            <div class="author">
+                Samantha B. (USA)
+                <span class="txn-id">Last Payout TXN: 5b7d...c4f8</span>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <p>&copy; 2025 XRP Mine Pro. All rights reserved.</p>
+        <div style="margin: 15px 0;">
+            <a href="#"><i class="fab fa-telegram-plane"></i></a>
+            <a href="#"><i class="fas fa-envelope"></i></a>
+        </div>
+        <div class="legal-links">
+            <a href="#">Privacy Policy</a> |
+            <a href="#">Terms of Service</a> |
+            <a href="#">FAQ</a>
+        </div>
+    </footer>
+
+</body>
+</html>
