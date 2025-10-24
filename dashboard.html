@@ -634,8 +634,6 @@
         // Variable to store dynamic plan data
         let ALL_PLANS_DATA = {}; 
         
-        // Default values (needed before Firebase data loads)
-               // ⚠️ නව කේතය මේ ආකාරයෙන් විය යුතුය:
         const FREE_PLAN_HASH_RATE_DEFAULT = 10.00; 
         const FREE_PLAN_EXPIRY_DAYS_DEFAULT = 15;
 
@@ -830,7 +828,7 @@
         }
 
         // ----------------------------------------------------
-        // 🟢 3. Fetching Plan Data from Firebase and updating Dashboard UI (New function)
+        // 🟢 3. Fetching Plan Data from Firebase and updating Dashboard UI 
         // ----------------------------------------------------
         async function fetchAndRenderPlans() {
             try {
@@ -999,7 +997,9 @@
                 document.getElementById('current-balance').textContent = (data.balance || 0.00).toFixed(4) + ' XRP';
                 document.getElementById('total-hash-rate').textContent = (data.totalHashRate || 0.00).toFixed(2) + ' MH/s';
                 document.getElementById('estimated-daily-income').textContent = '$' + (data.estimatedDailyIncome || 0.00).toFixed(2);
-                document.getElementById('total-referrals').textContent = data.referrals || 0;
+                
+                // 🔥 REFERRAL COUNT UI UPDATE (Total Referrals 0 වැඩ් වෙන් නෑ යන ගැටලුවට අදාළ කොටස)
+                document.getElementById('total-referrals').textContent = data.referrals || 0; 
                 
                 isFreePlanActive = data.isFreePlanActive || false;
                 totalHashRate = data.totalHashRate || 0.00; 

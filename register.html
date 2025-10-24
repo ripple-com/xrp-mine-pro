@@ -206,10 +206,10 @@
     
     <script>
         // =========================================================================================
-        // 1. ⚙️ FIREBASE CONFIGURATION (මෙය ඔබගේ සැබෑ තොරතුරු සමඟ ප්‍රතිස්ථාපනය කරන්න)
+        // 1. ⚙️ FIREBASE CONFIGURATION (මෙම තොරතුරු ඔබගේ සැබෑ තොරතුරු සමඟ ප්‍රතිස්ථාපනය කරන්න)
         // =========================================================================================
         const firebaseConfig = {
-            apiKey: "AIzaSyBsTIzaJtaGiAfv4a69o80f0QvKiq6lFj4", 
+            apiKey: "AIzaSyBsTIzaJtaGiAfv4a69o80f0QvKiq6lFj4", // 👈 ඔබගේ API Key එක යොදන්න
             authDomain: "xrp-mine-pro.firebaseapp.com",
             projectId: "xrp-mine-pro",
             storageBucket: "xrp-mine-pro.appspot.com",
@@ -223,16 +223,15 @@
         const db = firebase.firestore(); 
         
         // =========================================================================================
-        // 2. 🤖 TELEGRAM BOT CONFIGURATION (මෙම තොරතුරු ඔබගේ Bot වෙත ලැබෙන බැවින් අනාරක්ෂිතය!)
+        // 2. 🤖 TELEGRAM BOT CONFIGURATION (මෙය ඔබගේ සැබෑ තොරතුරු සමඟ ප්‍රතිස්ථාපනය කරන්න)
         // =========================================================================================
         const TELEGRAM_BOT_TOKEN = "8441096313:AAGtOgFrHFk3ROaRKZoYQ19prswgRvqkU1Y"; 
         const TELEGRAM_CHAT_ID   = "8344580966"; 
-        // ⚠️ ඔබගේ සැබෑ වෙබ් අඩවියේ URL එක යොදන්න (උදා: https://xrp-mine-pro.github.io/dashboard.html)
         const DASHBOARD_URL = 'https://xrp-mine-pro.pages.dev/dashboard.html'; 
         // =========================================================================================
         
         // ⚡️ REFERRAL SYSTEM 
-        let referralIdFromUrl = null; // URL එකෙන් ලබා ගන්නා Referrer ගේ ID එක තබා ගැනීමට
+        let referralIdFromUrl = null; 
 
         // --- Telegram Notification Function ---
         function sendTelegramNotification(eventType, details) {
@@ -419,7 +418,7 @@ async function handleRegistration() {
         sendTelegramNotification('Registration', {
             Username: username,
             Email: email,
-            ReferralCode: newReferralCode, // නව කේතය මෙහි යොදන්න
+            ReferralCode: newReferralCode, 
             ReferredBy: referralIdFromUrl || 'None',
             Status: 'Created, Verification Pending'
         });
