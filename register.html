@@ -50,6 +50,9 @@
         .logo { font-size: 2em; font-weight: 800; color: var(--secondary-color); margin-bottom: 25px; padding-bottom: 15px; border-bottom: 1px solid var(--border-color); }
         .tab-selector { display: flex; justify-content: center; margin-bottom: 30px; }
         .tab-btn { flex-grow: 1; padding: 15px 0; font-size: 1.2em; font-weight: 700; background: none; border: none; color: #9e9e9e; cursor: pointer; border-bottom: 3px solid transparent; transition: color 0.3s, border-bottom 0.3s; }
+        .tab-btn.active { color: var(--primary-color); border-bottom: 3px solid var(--primary-color); } /* Default Login Active */
+        .auth-container.register-active .tab-btn.active { color: var(--secondary-color); border-bottom: 3px solid var(--secondary-color); }
+
         .form-content { display: none; padding-top: 10px; }
         .form-content.active { display: block; }
 
@@ -122,7 +125,7 @@
 </head>
 <body>
 
-    <div class="auth-container">
+    <div class="auth-container" id="auth-container">
         <div class="logo">XRP MINE PRO</div>
         
         <div class="tab-selector">
@@ -330,7 +333,7 @@
         }
 
 
-     // 🟢 FIREBASE REGISTER FUNCTION (Referral Logic සහිතව)
+     // 🟢 FIREBASE REGISTER FUNCTION (Referral Logic නිවැරදි කරන ලදී)
 async function handleRegistration() {
     const username = document.getElementById('reg-username').value;
     const email = document.getElementById('reg-email').value;
@@ -348,7 +351,7 @@ async function handleRegistration() {
         const userCredential = await auth.createUserWithEmailAndPassword(email, password);
         const user = userCredential.user;
         
-        // 🟢 නව කේතය: සත්‍යාපනයෙන් පසු යා යුතු පිටුව සකසයි
+        // 🟢 ඊමේල් සත්‍යාපනය සඳහා සැකසීම්
         const actionCodeSettings = {
             url: DASHBOARD_URL, 
             handleCodeInApp: false, 
@@ -366,8 +369,8 @@ async function handleRegistration() {
             email: email,
             
             // ⚡️ REFERRAL SYSTEM FIELDS
-            referralCode: newReferralCode,             // තමන්ගේම Referral Code එක
-            referredBy: referralIdFromUrl || null,    // URL එකෙන් ආව Referrer ගේ ID එක (ref)
+            referralCode: newReferralCode,             
+            referredBy: referralIdFromUrl || null,    
             
             balance: 0.00, 
             totalMined: 0.00,
@@ -380,31 +383,22 @@ async function handleRegistration() {
         // ⚡️ REFERRAL LOGIC යාවත්කාලීන කිරීම (Referrer ගේ ගණන වැඩි කිරීම)
         if (referralIdFromUrl) {
             try {
-                // referralIdFromUrl (ref) එකට අදාළ Referrer ව සොයා ගැනීම.
+                // 1. referralCode එකට අදාළ Referrer ව සොයා ගැනීම.
                 const referrerQuery = await db.collection("users").where("referralCode", "==", referralIdFromUrl).limit(1).get();
                 
                 if (!referrerQuery.empty) {
                     const referrerDoc = referrerQuery.docs[0];
-                    const referrerDocRef = db.collection("users").doc(referrerDoc.id); // 🔥 නිවැරදි කළේ: Referrer ගේ Document Reference එක ලබා ගනී.
+                    const referrerId = referrerDoc.id; 
+                    const referrerDocRef = db.collection("users").doc(referrerId); 
                     
-                    // Transaction භාවිතයෙන් referrals ගණන 1කින් වැඩි කිරීම.
-                    await db.runTransaction(async (transaction) => {
-                        const doc = await transaction.get(referrerDocRef);
-                        if (!doc.exists) {
-                            // මෙහිදී දෝෂය නොසලකා හැරීමට හෝ ලොග් කිරීමට පුළුවන්
-                            throw "Referrer document does not exist during transaction!";
-                        }
-                        
-                        // 🔥 නිවැරදි කළේ: referrals ගණන 1කින් වැඩි කිරීම.
-                        const currentReferrals = doc.data().referrals || 0;
-                        const newReferrals = currentReferrals + 1;
-                        
-                        transaction.update(referrerDocRef, {
-                            referrals: newReferrals 
-                        });
-                        
-                        console.log(`✅ Referral count updated for referrer: ${referrerDoc.data().username}. New count: ${newReferrals}`);
+                    // 2. Transaction භාවිතයෙන් referrals ගණන 1කින් ආරක්ෂිතව වැඩි කිරීම.
+                    // FieldValue.increment(1) භාවිතා කිරීමෙන් race conditions වලක්වයි.
+                    await referrerDocRef.update({
+                        referrals: firebase.firestore.FieldValue.increment(1)
+                    }).then(() => {
+                        console.log(`✅ Referral count atomically updated for referrer ID: ${referrerId}`);
                     });
+                    
                 } else {
                     console.warn("⚠️ Referrer user not found with code:", referralIdFromUrl);
                 }
@@ -475,7 +469,7 @@ async function handleRegistration() {
                 });
                 
                 displayFeedback('login-feedback', 'Login successful! Welcome, ' + user.displayName + '!', 'success');
-                window.location.href = DASHBOARD_URL; // ⚠️ DASHBOARD_URL භාවිතා කරයි
+                window.location.href = DASHBOARD_URL; 
                 
             } catch (error) {
                 let errorMessage = "Invalid email or password.";
@@ -531,6 +525,8 @@ async function handleRegistration() {
             document.querySelectorAll('.form-content').forEach(form => { form.classList.remove('active'); });
             document.querySelectorAll('.tab-btn').forEach(btn => { btn.classList.remove('active'); });
             
+            const container = document.getElementById('auth-container');
+
             if (document.getElementById('verification-msg').style.display === 'block') {
                 document.getElementById('reg-form').style.display = 'block';
                 document.getElementById('verification-msg').style.display = 'none';
@@ -547,15 +543,18 @@ async function handleRegistration() {
             const activeTabButton = document.querySelector(`.tab-btn[onclick*="${formId}"]`);
             activeTabButton.classList.add('active');
             
-            const container = document.querySelector('.auth-container');
             if (formId === 'login') {
                 container.style.borderTopColor = 'var(--primary-color)'; 
-                activeTabButton.style.color = 'var(--primary-color)';
-                activeTabButton.style.borderBottomColor = 'var(--primary-color)';
+                document.querySelector(`.tab-btn[onclick*="login"]`).style.color = 'var(--primary-color)';
+                document.querySelector(`.tab-btn[onclick*="login"]`).style.borderBottomColor = 'var(--primary-color)';
+                document.querySelector(`.tab-btn[onclick*="register"]`).style.color = '#9e9e9e';
+                document.querySelector(`.tab-btn[onclick*="register"]`).style.borderBottomColor = 'transparent';
             } else {
                 container.style.borderTopColor = 'var(--secondary-color)'; 
-                activeTabButton.style.color = 'var(--secondary-color)';
-                activeTabButton.style.borderBottomColor = 'var(--secondary-color)';
+                document.querySelector(`.tab-btn[onclick*="register"]`).style.color = 'var(--secondary-color)';
+                document.querySelector(`.tab-btn[onclick*="register"]`).style.borderBottomColor = 'var(--secondary-color)';
+                document.querySelector(`.tab-btn[onclick*="login"]`).style.color = '#9e9e9e';
+                document.querySelector(`.tab-btn[onclick*="login"]`).style.borderBottomColor = 'transparent';
             }
         }
         
@@ -566,9 +565,10 @@ async function handleRegistration() {
 
             if (referralIdFromUrl) {
                 console.log("Referral ID found in URL (Referred by):", referralIdFromUrl);
+                showForm('register'); // Referral link එකක් තිබේ නම් Register Form එකට යන්න
+            } else {
+                 showForm('login');
             }
-            
-            showForm('login');
         });
     </script>
 

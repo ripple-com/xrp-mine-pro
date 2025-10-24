@@ -676,6 +676,8 @@
                         const currentBalance = doc.data().balance || 0;
                         const newBalance = currentBalance + xrpEarnedOffline;
                         
+                        // Transaction එක තුළ FieldValue.increment භාවිතා නොකරන්න, එය update() සඳහා සුදුසුය.
+                        // Transaction එකක් තුළදී දත්ත කියවා යාවත්කාලීන කිරීම සුදුසුයි.
                         transaction.update(userDocRef, {
                             balance: newBalance,
                             // Set new update time to current server time
@@ -998,7 +1000,7 @@
                 document.getElementById('total-hash-rate').textContent = (data.totalHashRate || 0.00).toFixed(2) + ' MH/s';
                 document.getElementById('estimated-daily-income').textContent = '$' + (data.estimatedDailyIncome || 0.00).toFixed(2);
                 
-                // 🔥 REFERRAL COUNT UI UPDATE (Total Referrals 0 වැඩ් වෙන් නෑ යන ගැටලුවට අදාළ කොටස)
+                // 🔥 REFERRAL COUNT UI UPDATE
                 document.getElementById('total-referrals').textContent = data.referrals || 0; 
                 
                 isFreePlanActive = data.isFreePlanActive || false;
@@ -1045,7 +1047,7 @@
                 // 🟢 Generate Referral Link
                 const referralLinkInput = document.getElementById("referralLink");
                 const referralCode = data.referralCode || user.uid.substring(0, 8); 
-                const BASE_REGISTER_URL = 'https://xrp-mine-pro.pages.dev/register.html'; 
+                const BASE_REGISTER_URL = window.location.origin + '/register.html'; // Use current domain
                 referralLinkInput.value = `${BASE_REGISTER_URL}?ref=${referralCode}`; 
  
                 
