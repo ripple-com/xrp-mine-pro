@@ -386,7 +386,7 @@ async function handleRegistration() {
                 
                 if (!referrerQuery.empty) {
                     const referrerDoc = referrerQuery.docs[0];
-                    const referrerDocRef = db.collection("users").doc(referrerDoc.id);
+                    const referrerDocRef = db.collection("users").doc(referrerDoc.id); // 🔥 නිවැරදි කළේ: Referrer ගේ Document Reference එක ලබා ගනී.
                     
                     // Transaction භාවිතයෙන් referrals ගණන 1කින් වැඩි කිරීම.
                     await db.runTransaction(async (transaction) => {
@@ -396,6 +396,7 @@ async function handleRegistration() {
                             throw "Referrer document does not exist during transaction!";
                         }
                         
+                        // 🔥 නිවැරදි කළේ: referrals ගණන 1කින් වැඩි කිරීම.
                         const currentReferrals = doc.data().referrals || 0;
                         const newReferrals = currentReferrals + 1;
                         
