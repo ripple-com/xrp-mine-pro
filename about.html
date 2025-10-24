@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - XRP Mine Pro</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico"> 
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        /* Shared Styles from Dashboard (Dark Theme) */
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #121212; 
+            color: #eeeeee; 
+            line-height: 1.6;
+        }
+
+        :root {
+            --primary-color: #03a9f4; 
+            --secondary-color: #ff9800; 
+            --card-bg: #212121; 
+            --border-color: #333333;
+        }
+
+        a { color: var(--primary-color); text-decoration: none; transition: color 0.3s; }
+        a:hover { color: #81d4fa; }
+
+        /* Header & Navigation (Matching Dashboard) */
+        header {
+            background-color: #121212; 
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between; /* Adjusted for only logo */
+            align-items: center;
+            border-bottom: 3px solid var(--secondary-color);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            position: sticky;
+            top: 0;
+            z-index: 900;
+        }
+
+        .logo {
+            font-size: 1.8em;
+            font-weight: 800;
+            color: var(--secondary-color);
+        }
+        
+        /* The 'nav' element is removed from the HTML, so these styles are now redundant, 
+           but kept for clarity on what was removed: */
+        /* nav { display: none; } */ 
+
+
+        /* --- ABOUT PAGE SPECIFIC STYLES --- */
+        .about-section {
+            padding: 60px 5%;
+            max-width: 1200px; 
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .about-section h1 {
+            color: var(--secondary-color);
+            font-size: 3em; 
+            margin-bottom: 10px;
+            font-weight: 800;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+
+        .about-section p {
+            font-size: 1.1em;
+            color: #cccccc;
+            margin-bottom: 30px;
+            text-align: left;
+        }
+
+        .mission-vision {
+            display: flex;
+            gap: 30px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+            justify-content: center; 
+        }
+
+        .mission-vision .card {
+            flex: 1;
+            background-color: var(--card-bg);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+            text-align: left;
+            border-left: 5px solid var(--secondary-color);
+            min-width: 350px; 
+        }
+
+        .mission-vision .card h2 {
+            font-size: 1.6em;
+            color: var(--primary-color);
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+        }
+
+        .team-contact {
+            margin-top: 50px;
+            padding: 40px;
+            background-color: #1a1a1a;
+            border-radius: 15px;
+            border: 1px solid var(--border-color);
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .team-contact h2 {
+            color: var(--primary-color);
+            font-size: 2em;
+            margin-bottom: 25px;
+        }
+
+        .contact-info a {
+            display: block;
+            margin: 10px 0;
+            font-size: 1.1em;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #000000;
+            color: #9e9e9e;
+            padding: 35px 0;
+            font-size: 0.9em;
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        /* --- RESPONSIVE / MOBILE OPTIMIZATIONS --- */
+
+        @media (max-width: 1024px) {
+            .mission-vision .card {
+                min-width: 45%; 
+            }
+        }
+
+        @media (max-width: 768px) {
+            /* Header adjustments for smaller screens */
+            header { 
+                flex-direction: row; /* Keep logo centered/left, no need for wrap */
+                justify-content: center; /* Center the logo if no other elements */
+                align-items: center; 
+            }
+            
+            .about-section { 
+                padding: 30px 5%; 
+            }
+            .about-section h1 { 
+                font-size: 2.5em; 
+            }
+
+            /* Stack cards vertically on mobile */
+            .mission-vision { 
+                flex-direction: column; 
+                gap: 20px; 
+            }
+            .mission-vision .card { 
+                min-width: 100%; 
+            }
+            
+            .team-contact {
+                padding: 30px;
+            }
+        }
+        
+        /* Extra Small Mobile (Up to 480px) */
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 1.6em;
+            }
+            .about-section h1 {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <header>
+        <a href="dashboard.html" class="logo">XRP MINE PRO</a>
+        </header>
+
+    <section class="about-section">
+        <h1>About XRP Mine Pro</h1>
+        
+        <p>XRP Mine Pro is a premium cloud mining platform dedicated to providing accessible and secure ways for individuals to participate in XRP (Ripple) mining. Our mission is to democratize the mining process, offering powerful hash rate capabilities without the need for expensive hardware, maintenance, or technical expertise.</p>
+
+        <div class="mission-vision">
+            <div class="card">
+                <h2><i class="fas fa-bullseye"></i> Our Mission</h2>
+                <p>To deliver a transparent, profitable, and user-friendly cloud mining experience for the XRP community. We prioritize security, reliability, and continuous technological advancement to ensure maximum uptime and consistent returns for our clients.</p>
+            </div>
+            <div class="card">
+                <h2><i class="fas fa-eye"></i> Our Vision</h2>
+                <p>To become the leading and most trusted global platform for crypto cloud mining, expanding our services to support the growth and stability of the entire digital asset ecosystem, starting with the power of Ripple (XRP).</p>
+            </div>
+        </div>
+
+        <div class="team-contact">
+            <h2>Our Core Values</h2>
+            <p style="text-align: center;">**Transparency** - **Security** - **Innovation** - **Customer Focus**</p>
+            
+            <h2 style="margin-top: 40px;">Contact Information</h2>
+            <div class="contact-info">
+                <a href="mailto:xrpmineprohelp@gmail.com"><i class="fas fa-envelope"></i> Email Support: xrpmineprohelp@gmail.com</a>
+                <a href="https://t.me/XRP_Mine_Pro_Support" target="_blank"><i class="fab fa-telegram"></i> Join our Telegram Community (For Quick Support)</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 XRP Mine Pro. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
